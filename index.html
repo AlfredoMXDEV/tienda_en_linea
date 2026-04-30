@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Tech | Glass Edition - Vanguardia Corporativa</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --nexus-accent: #60a5fa;
+            --nexus-dark: #0f172a;
+            --nexus-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #ffffff;
+            background: var(--nexus-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Accesibilidad: Foco con resplandor */
+        :focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+        }
+
+        /* Estilo Glassmorphism Base */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+        }
+
+        /* Header & Navigation */
+        .navbar {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.2rem 0;
+            z-index: 1050;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--nexus-accent) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--nexus-accent);
+            transition: var(--transition-smooth);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Hero Section con Video */
+        .hero-container {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            object-fit: cover;
+            filter: brightness(0.6);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, var(--nexus-dark) 90%);
+            z-index: -1;
+        }
+
+        /* Product Cards Glass Style */
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--nexus-accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-image {
+            height: 220px;
+            object-fit: cover;
+            width: 100%;
+            filter: saturate(1.2);
+            transition: var(--transition-smooth);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        /* Botones Especiales */
+        .btn-glass {
+            background: var(--nexus-accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+        }
+
+        .btn-glass:hover {
+            background: #3b82f6;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(96, 165, 250, 0.5);
+        }
+
+        .btn-glass-outline {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-glass-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Cart Badge */
+        .cart-badge {
+            background: var(--nexus-accent);
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 2px solid var(--nexus-dark);
+        }
+
+        /* Footer Glass */
+        footer {
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid var(--glass-border);
+            padding: 80px 0 30px;
+        }
+
+        /* Utilitarios */
+        .text-accent { color: var(--nexus-accent); }
+        .bg-glass-dark { background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); }
+
+        /* Estilo de Inputs en Checkout */
+        .form-control-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: white;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .form-control-glass:focus {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: var(--nexus-accent);
+        }
+
+        /* Toast personalizado */
+        .toast-glass {
+            background: rgba(15, 23, 42, 0.8) !important;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--nexus-accent) !important;
+            border-radius: 15px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-container { height: 70vh; }
+            .display-3 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegación Glass -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#" onclick="navigateTo('home')">
+                <div class="glass-panel p-2 me-2 d-flex align-items-center">
+                    <i class="bi bi-layers-half text-accent fs-4"></i>
+                </div>
+                <span class="fw-extrabold tracking-tighter fs-4 text-white">NEXUS<span class="text-accent">GLASS</span></span>
+            </a>
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-grid-3x3-gap-fill fs-2"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('home')">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="navigateTo('catalog')">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Innovación</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Enterprise</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-link p-2 text-white position-relative" onclick="navigateTo('cart')" aria-label="Carrito">
+                        <i class="bi bi-bag-heart fs-4"></i>
+                        <span class="cart-badge" id="cart-count">0</span>
+                    </button>
+                    <button class="btn btn-glass d-none d-lg-block">Contacto VIP</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main id="app-content">
+        <!-- Renderizado dinámico -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <h4 class="fw-bold mb-4">NEXUS GLASS</h4>
+                    <p class="text-white-50">Redefiniendo la estética del hardware corporativo con transparencia y potencia sin precedentes.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="#" class="glass-panel p-2 text-white"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="glass-panel p-2 text-white"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="glass-panel p-2 text-white"><i class="bi bi-discord"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6 class="fw-bold text-accent mb-4">Sistemas</h6>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2">Servidores Pro</li>
+                        <li class="mb-2">Nodos de Red</li>
+                        <li class="mb-2">Almacenamiento</li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-6">
+                    <h6 class="fw-bold text-accent mb-4">Legal</h6>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2">Privacidad</li>
+                        <li class="mb-2">Términos B2B</li>
+                        <li class="mb-2">Garantía</li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="fw-bold text-accent mb-4">Newsletter Elite</h6>
+                    <div class="glass-panel p-2 d-flex">
+                        <input type="email" class="form-control bg-transparent border-0 text-white" placeholder="tu@empresa.com">
+                        <button class="btn btn-glass btn-sm">Unirse</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5 border-secondary opacity-25">
+            <div class="text-center text-white-50 small">
+                <p>&copy; 2024 Nexus Glass International. Built for High Performance.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notificaciones Toast Glass -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast toast-glass" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex p-2">
+                <div class="toast-body text-white" id="toast-message">
+                    Actualización de sistema completada.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // --- DATA ---
+        const PRODUCTS = [
+            { id: 101, name: "Iridium Server Core", category: "Core Systems", price: 5499, img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc48?q=80&w=800", rating: 5, specs: "Liquid Cooling / 512GB ECC RAM" },
+            { id: 102, name: "Vertex Workstation", category: "High Performance", price: 3200, img: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=800", rating: 5, specs: "Threadripper Pro / RTX 6000 Ada" },
+            { id: 103, name: "Neon Switch 10G", category: "Networking", price: 1150, img: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800", rating: 4, specs: "Managed L3 / 48 Ports POE+" },
+            { id: 104, name: "Prisma Display 32", category: "Visuals", price: 1899, img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=800", rating: 5, specs: "Mini-LED 1600nits / 10bit Color" },
+            { id: 105, name: "Atlas Storage Hub", category: "Data Storage", price: 2100, img: "https://images.unsplash.com/photo-1563770660941-20978e870e26?q=80&w=800", rating: 4, specs: "Hot-swap NVMe / Raid 10" },
+            { id: 106, name: "Nexus Gateway X", category: "Security", price: 890, img: "https://images.unsplash.com/photo-1597733336794-12d05021d510?q=80&w=800", rating: 5, specs: "Zero Trust Architecture" }
+        ];
+
+        // --- STATE ---
+        let cart = JSON.parse(localStorage.getItem('nexus_glass_cart')) || [];
+        let view = 'home';
+
+        // --- NAVIGATION ---
+        function navigateTo(newView) {
+            view = newView;
+            window.scrollTo(0,0);
+            render();
+        }
+
+        function render() {
+            const main = document.getElementById('app-content');
+            main.style.opacity = 0;
+            
+            setTimeout(() => {
+                switch(view) {
+                    case 'home': main.innerHTML = renderHome(); break;
+                    case 'catalog': main.innerHTML = renderCatalog(); break;
+                    case 'product': main.innerHTML = renderProductDetail(); break;
+                    case 'cart': main.innerHTML = renderCart(); break;
+                    case 'checkout': main.innerHTML = renderCheckout(); break;
+                    case 'success': main.innerHTML = renderSuccess(); break;
+                }
+                main.style.opacity = 1;
+                AOS.init({ duration: 1000, once: true });
+                updateCartCount();
+            }, 200);
+        }
+
+        // --- VIEWS ---
+        function renderHome() {
+            return `
+                <section class="hero-container">
+                    <video autoplay muted loop id="hero-video">
+                        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-lines-on-a-black-background-40540-large.mp4" type="video/mp4">
+                    </video>
+                    <div class="hero-overlay"></div>
+                    <div class="container text-center" data-aos="zoom-in">
+                        <span class="badge bg-glass-dark border border-white-50 p-2 px-3 mb-4">Enterprise Edition 2024</span>
+                        <h1 class="display-1 fw-extrabold mb-4 text-white">Transparencia en <br><span class="text-accent">Alta Potencia</span></h1>
+                        <p class="lead mb-5 text-white-50 mx-auto" style="max-width: 700px;">Descubra la nueva generación de infraestructura tecnológica diseñada con una estética minimalista y un rendimiento sin precedentes.</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn btn-glass" onclick="navigateTo('catalog')">Explorar Sistemas</button>
+                            <button class="btn btn-glass-outline btn-nexus">Demo Interactiva</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-5">
+                    <div class="container py-5">
+                        <div class="d-flex justify-content-between align-items-center mb-5" data-aos="fade-up">
+                            <div>
+                                <h2 class="fw-bold">Sistemas Destacados</h2>
+                                <p class="text-white-50">Ingeniería de precisión en cada componente.</p>
+                            </div>
+                            <button class="btn btn-glass-outline btn-sm" onclick="navigateTo('catalog')">Ver Catálogo</button>
+                        </div>
+                        <div class="row g-4">
+                            ${PRODUCTS.slice(0, 3).map(p => renderProductCard(p)).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderCatalog() {
+            return `
+                <section class="py-5 mt-5">
+                    <div class="container">
+                        <div class="glass-panel p-5 mb-5" data-aos="fade-down">
+                            <h2 class="fw-bold mb-3">Catálogo Corporativo</h2>
+                            <p class="text-white-50">Filtre nuestra gama de hardware premium.</p>
+                            <div class="row g-3 mt-4">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control form-control-glass" placeholder="Buscar por modelo...">
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select form-control-glass">
+                                        <option>Todas las categorías</option>
+                                        <option>Servidores</option>
+                                        <option>Almacenamiento</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-4">
+                            ${PRODUCTS.map(p => renderProductCard(p)).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderProductCard(p) {
+            return `
+                <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                    <div class="product-card" onclick="openDetail(${p.id})">
+                        <div class="position-relative overflow-hidden">
+                            <img src="${p.img}" class="product-image" alt="${p.name}">
+                            <div class="position-absolute top-0 end-0 m-3">
+                                <span class="badge bg-glass-dark p-2 border border-white-50">Premium</span>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+                            <small class="text-accent fw-bold">${p.category.toUpperCase()}</small>
+                            <h4 class="fw-bold text-white my-2">${p.name}</h4>
+                            <p class="text-white-50 small mb-4">${p.specs}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fs-4 fw-bold">$${p.price.toLocaleString()}</span>
+                                <button class="btn btn-glass btn-sm" onclick="addToCart(event, ${p.id})">
+                                    <i class="bi bi-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCart() {
+            if(cart.length === 0) return `
+                <div class="container py-5 mt-5 text-center" data-aos="fade-up">
+                    <div class="glass-panel py-5">
+                        <i class="bi bi-bag-x fs-1 text-accent mb-4"></i>
+                        <h2 class="fw-bold">Cámara de pedidos vacía</h2>
+                        <p class="text-white-50 mb-4">No hay sistemas pendientes de procesamiento.</p>
+                        <button class="btn btn-glass" onclick="navigateTo('catalog')">Ir al Catálogo</button>
+                    </div>
+                </div>
+            `;
+
+            const subtotal = cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+
+            return `
+                <section class="py-5 mt-5">
+                    <div class="container">
+                        <h2 class="fw-bold mb-5">Gestión de Adquisiciones</h2>
+                        <div class="row g-5">
+                            <div class="col-lg-8">
+                                <div class="glass-panel p-4">
+                                    ${cart.map(item => `
+                                        <div class="d-flex align-items-center gap-4 mb-4 pb-4 border-bottom border-secondary border-opacity-25">
+                                            <img src="${item.img}" class="rounded-4" width="100" height="100" style="object-fit:cover">
+                                            <div class="flex-grow-1">
+                                                <h5 class="fw-bold mb-1">${item.name}</h5>
+                                                <small class="text-white-50">Unit: $${item.price.toLocaleString()}</small>
+                                            </div>
+                                            <div class="d-flex align-items-center glass-panel p-1">
+                                                <button class="btn btn-link text-white" onclick="updateQty(${item.id}, -1)">-</button>
+                                                <span class="px-3">${item.qty}</span>
+                                                <button class="btn btn-link text-white" onclick="updateQty(${item.id}, 1)">+</button>
+                                            </div>
+                                            <div class="fw-bold fs-5">$${(item.price * item.qty).toLocaleString()}</div>
+                                            <button class="btn btn-link text-danger" onclick="removeItem(${item.id})"><i class="bi bi-trash3"></i></button>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="glass-panel p-4 sticky-top" style="top:120px">
+                                    <h5 class="fw-bold mb-4">Resumen de Inversión</h5>
+                                    <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><span>$${subtotal.toLocaleString()}</span></div>
+                                    <div class="d-flex justify-content-between mb-2"><span>Impuestos Corporativos</span><span>$${(subtotal * 0.15).toLocaleString()}</span></div>
+                                    <hr class="border-white opacity-25">
+                                    <div class="d-flex justify-content-between fs-4 fw-bold mb-4"><span>Total</span><span class="text-accent">$${(subtotal * 1.15).toLocaleString()}</span></div>
+                                    <button class="btn btn-glass w-100 py-3" onclick="navigateTo('checkout')">Continuar al Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderCheckout() {
+             return `
+                <section class="py-5 mt-5">
+                    <div class="container">
+                        <div class="row g-5">
+                            <div class="col-lg-7">
+                                <div class="glass-panel p-5">
+                                    <h3 class="fw-bold mb-4">Confirmación de Datos</h3>
+                                    <form id="checkout-form" onsubmit="submitOrder(event)">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="small fw-bold text-white-50 mb-2">Responsable IT</label>
+                                                <input type="text" class="form-control form-control-glass" required placeholder="Nombre completo">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small fw-bold text-white-50 mb-2">Email Corporativo</label>
+                                                <input type="email" class="form-control form-control-glass" required placeholder="it@empresa.com">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="small fw-bold text-white-50 mb-2">Dirección del Data Center</label>
+                                                <input type="text" class="form-control form-control-glass" required placeholder="Sede, Piso, Rack ID">
+                                            </div>
+                                            <div class="col-md-12 mt-4">
+                                                <label class="small fw-bold text-white-50 mb-2">Método de Facturación</label>
+                                                <div class="d-flex gap-3">
+                                                    <div class="glass-panel p-3 flex-grow-1 text-center border-accent">
+                                                        <i class="bi bi-bank fs-4 mb-2 d-block"></i> Transferencia
+                                                    </div>
+                                                    <div class="glass-panel p-3 flex-grow-1 text-center opacity-50">
+                                                        <i class="bi bi-credit-card fs-4 mb-2 d-block"></i> Corporate Card
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-glass w-100 mt-5 py-3">Finalizar Orden Corporativa</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+             `;
+        }
+
+        function renderSuccess() {
+            return `
+                <div class="container py-5 mt-5 text-center" data-aos="zoom-in">
+                    <div class="glass-panel py-5 px-4 mx-auto" style="max-width: 600px;">
+                        <div class="p-3 d-inline-block glass-panel border-accent mb-4">
+                            <i class="bi bi-shield-check fs-1 text-accent"></i>
+                        </div>
+                        <h1 class="fw-bold mb-3">Orden Asegurada</h1>
+                        <p class="text-white-50 mb-5">El protocolo de adquisición ha sido completado. Recibirá un enlace de seguimiento cifrado en su correo institucional en los próximos 5 minutos.</p>
+                        <button class="btn btn-glass" onclick="navigateTo('home')">Regresar al Dashboard</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- FUNCTIONS ---
+        function addToCart(e, id) {
+            e.stopPropagation();
+            const p = PRODUCTS.find(item => item.id == id);
+            const exists = cart.find(i => i.id == id);
+            if(exists) exists.qty++;
+            else cart.push({...p, qty: 1});
+            
+            save();
+            updateCartCount();
+            showToast(`Sincronizado: ${p.name}`);
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.find(i => i.id == id);
+            item.qty += delta;
+            if(item.qty <= 0) removeItem(id);
+            else { save(); render(); }
+        }
+
+        function removeItem(id) {
+            cart = cart.filter(i => i.id != id);
+            save();
+            render();
+            showToast('Elemento purgado del sistema');
+        }
+
+        function openDetail(id) {
+            // Demo simple: Al ser SPA, guardamos el ID y cambiamos vista
+            localStorage.setItem('selected_p_id', id);
+            showToast('Cargando especificaciones...');
+            // En una app real iría a 'product', aquí simplificamos por la estética glass
+        }
+
+        function save() { localStorage.setItem('nexus_glass_cart', JSON.stringify(cart)); }
+
+        function updateCartCount() {
+            const count = cart.reduce((acc, i) => acc + i.qty, 0);
+            document.getElementById('cart-count').innerText = count;
+        }
+
+        function showToast(msg) {
+            const toastEl = document.getElementById('liveToast');
+            document.getElementById('toast-message').innerText = msg;
+            new bootstrap.Toast(toastEl).show();
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            cart = [];
+            save();
+            navigateTo('success');
+        }
+
+        // Init
+        window.onload = render;
+    </script>
+</body>
+</html>
